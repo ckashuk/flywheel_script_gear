@@ -7,7 +7,13 @@ import flywheel
 import requests
 from typing import Union
 
+"""
+"""
+
 class FWSFileException(Exception):
+    """
+    add one or more specific exceptions now, you may ned them later@
+    """
     pass
 
 def fws_get_request_url(fw: flywheel.Client, fw_object: Union[flywheel.FileEntry, str], upload: bool = False) -> tuple[str, dict]:
@@ -103,7 +109,10 @@ def fws_upload(fw: flywheel.Client, fw_object: Union[flywheel.FileEntry, str], l
         r = requests.post(url, headers=headers, files=files, data=data, timeout=(10, 300))
         r.raise_for_status()
 
-def fws_validate_fws_files(fw):
+
+# the following functions are meant as usable examples of how to make use of fws_upload and fws_download in getting
+# information from flywheel projects
+def fws_validate_fws_files(fw) -> None:
     """
     simple test code using one of my api-keys and always-existing test objects
 
@@ -124,7 +133,7 @@ def fws_validate_fws_files(fw):
     # file_fw_path_bad = 'prostatespore/fws_test_project/fws_test_subject/fws_test_session'
     # fws_download(fw, file_fw_path_from, f'z://scratch/{os.path.basename(file_fw_path_from)}')
 
-def fws_example_download_image_for_subject(fw, download_folder, project_label, subject_label, session_label, get_nii, get_dicom):
+def fws_example_download_image_for_subject(fw, download_folder, project_label, subject_label, session_label, get_nii, get_dicom) -> None:
     """
     example code to download all nifti and/dr dicom files for a given subject/session
 
@@ -161,7 +170,7 @@ def fws_example_download_image_for_subject(fw, download_folder, project_label, s
                     fws_download(fw, file, f'{download_folder}/{file.name}')
                     print(f'{file.name} downloaded')
 
-def fws_files_simple_cli():
+def fws_files_simple_cli() -> None:
     """
     simple single-file command line
 
@@ -184,9 +193,6 @@ def fws_files_simple_cli():
 
 
 if __name__ == '__main__':
-    fw = flywheel.Client('flywheelaz.uwhealth.org:djEl4p5F0JNRNnkuqAeuT-uzho21Cu9ny96A43jwrPg4-CdejUgXlJFPA',
-                               request_timeout=1000)
-
-    # fws_files_simple_cli()
-
-    fws_example_download_image_for_subject(fw, '/home/aa-cxk023/share/scratch/download_test', 'FETS_GBM', 'HeadTreatPlan100049', '20200130', True, True)
+    # fw = flywheel.Client('<<api-key>>', request_timeout=1000)
+    # fws_example_download_image_for_subject(fw, '/home/aa-cxk023/share/scratch/download_test', 'FETS_GBM', 'HeadTreatPlan100049', '20200130', True, True)
+    fws_files_simple_cli()
