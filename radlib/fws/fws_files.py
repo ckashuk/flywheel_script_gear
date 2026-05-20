@@ -8,6 +8,31 @@ import requests
 from typing import Union
 
 """
+This is a piece of the future "radlib" package that can download and upload files from Flywheel to Platform R.
+What you need to make this work is a flywheel sdk API Key. This key is generated from your flywheel login
+and promotes safety for the information being stored. To generate a key:
+in the flywheel browser UI, left click on your user icon in the upper right corner (usually a circle) and select 
+'profile' from the menu.
+Scroll down to the "Flywheel Access" section (right now it is the last), and click on +Generate API Key. 
+Give it a short but descriptive name, and an expiration date (I would suggest one year in the future, a good
+balance between security and convenience.
+
+An example function you can write once you have the api key:
+def fw_connect():
+    return flywheel.Client('<<api-key>>')
+    
+The other concept is of a "flywheel path", which is just a delimited set of identifiers to get to a
+flywheel object. If you write the path in this way:
+
+group_id/project_label/subject_label/session_label/acquisition_label/file_name
+
+then you can use os.path.basename and os.path.dirname to move up and down the flywheel object tree.
+
+Any issues or questions with this code please do not hesitate to ask me! ckashuk@wisc.edu
+
+changelog:
+2026-05 ckashuk@wisc.edu initial development
+
 """
 
 class FWSFileException(Exception):
