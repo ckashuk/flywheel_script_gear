@@ -147,11 +147,11 @@ def fws_validate_fws_files(fw) -> None:
         a valid flywheel client object, requires an api-key to create
 
     """
-    file_fw_path_from = 'prostatespore/fws_test_project/fws_test_subject/fws_test_session/MR/Obl Axial T2 Prostate.zip'
-    file_fw_path_to = 'prostatespore/fws_test_project/fws_test_subject/fws_test_session/MR/Obl Axial T2 Prostate 2.zip'
+    file_fw_path_from = 'garrettgroup/fws_test_project/fws_test_subject/fws_test_session/MR/test_file.nii.gz'
+    file_fw_path_to = 'garrettgroup/fws_test_project/fws_test_subject/fws_test_session/MR/upload_file.nii.gz'
 
     fws_download(fw, file_fw_path_from, f'z://scratch/{os.path.basename(file_fw_path_from)}')
-    shutil.copyfile(file_fw_path_from, file_fw_path_to)
+    shutil.copyfile(f'z://scratch/{os.path.basename(file_fw_path_from)}', f'z://scratch/{os.path.basename(file_fw_path_to)}')
     fws_upload(fw, file_fw_path_to, f'z://scratch/{os.path.basename(file_fw_path_to)}')
 
     # exception case: try to download a session
@@ -218,6 +218,8 @@ def fws_files_simple_cli() -> None:
 
 
 if __name__ == '__main__':
-    # fw = flywheel.Client('<<api-key>>', request_timeout=1000)
+    fw = flywheel.Client('flywheelaz.uwhealth.org:djEl4p5F0JNRNnkuqAeuT-uzho21Cu9ny96A43jwrPg4-CdejUgXlJFPA', request_timeout=1000)
+
+    fws_validate_fws_files(fw)
     # fws_example_download_image_for_subject(fw, '/home/aa-cxk023/share/scratch/download_test', 'FETS_GBM', 'HeadTreatPlan100049', '20200130', True, True)
-    fws_files_simple_cli()
+    # fws_files_simple_cli()
