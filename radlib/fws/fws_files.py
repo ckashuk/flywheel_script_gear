@@ -32,7 +32,7 @@ Any issues or questions with this code please do not hesitate to ask me! ckashuk
 
 changelog:
 2026-05 ckashuk@wisc.edu initial development
-
+2026-05 increase timeouts
 """
 
 class FWSFileException(Exception):
@@ -122,7 +122,7 @@ def fws_upload(fw: flywheel.Client, fw_object: Union[flywheel.FileEntry, str], l
     """
     # if fw_object is a path, resolve it to the object
     if isinstance(fw_object, str):
-        fw_object = fw.resolve(os.path.dirname(fw_object))['path'][-1]
+        fw_object = fw.resolve(fw_object)['path'][-1]
 
     # open with requests and the api key, flywheel generates a "ticket" to allow uploading
     url, headers = fws_get_request_url(fw, fw_object, upload=True)
@@ -131,7 +131,7 @@ def fws_upload(fw: flywheel.Client, fw_object: Union[flywheel.FileEntry, str], l
         files = {'file': (filename, f, 'application/octet-stream')}
         metadata = json.dumps({'name': filename})
         data = {'metadata': metadata}
-        r = requests.post(url, headers=headers, files=files, data=data, timeout=(10, 300))
+        r = requests.post(url, headers=headers, files=files, data=data, timeout=(1000, 3000))
         r.raise_for_status()
 
 
